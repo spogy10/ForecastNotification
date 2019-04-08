@@ -3,8 +3,13 @@ package database;
 import database.tables.CityTable;
 import database.tables.RoleTable;
 import database.tables.WorkerTable;
+import model.City;
+import model.Role;
+import model.Worker;
 
 import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class WorkerDatabaseManager {
     private Connection con = null;
@@ -29,7 +34,7 @@ public class WorkerDatabaseManager {
         try{
             Class.forName(DRIVER).newInstance();
 
-            String url = "jdbc:sqlite:.sqlite";
+            String url = "jdbc:sqlite:WorkerDB.db";
             con = DriverManager.getConnection(url);
 
             setUpTable();
@@ -45,7 +50,7 @@ public class WorkerDatabaseManager {
         }
     }
 
-    private void setUpTable(){ //todo: write setup table code
+    private void setUpTable(){
         setUpCityTable();
         setUpRoleTable();
         setUpWorkerTable();
@@ -126,6 +131,48 @@ public class WorkerDatabaseManager {
         }
     }
 
+    public List<Worker> retrieveAllWorkers(){
+        LinkedList<Worker> workersList = new LinkedList<>();
+        String columns = generateColumnNames(new String[]{WORKER_TABLE_NAME+".*", CITY_TABLE_NAME+"."+CityTable.NAME+" AS city_name", CITY_TABLE_NAME+"."+CityTable.COUNTRY+" AS country", ROLE_TABLE_NAME+"."+RoleTable.NAME+" AS role"});
+        String query = "SELECT "+columns+" FROM "+WORKER_TABLE_NAME+
+                " INNER JOIN "+CITY_TABLE_NAME+" ON "+CITY_TABLE_NAME+"."+CityTable.ID+" = "+WORKER_TABLE_NAME+"."+WorkerTable.CITY_ID+
+                " INNER JOIN "+ROLE_TABLE_NAME+" ON "+ROLE_TABLE_NAME+"."+RoleTable.ID+" = "+WORKER_TABLE_NAME+"."+WorkerTable.ROLE_ID+";";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            Statement s = createStatement();
+
+            ps = prepareStatement(query);
+            rs = ps.executeQuery();
+            Worker w;
+            City c;
+            Role r;
+            while(rs.next()){
+                w = new Worker(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8));
+                c = new City(rs.getInt(4), rs.getString(9), rs.getString(10));
+                r = new Role(rs.getInt(6), rs.getString(11));
+                w.setCity(c);
+                w.setRole(r);
+                workersList.add(w);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("Error getting worker list");
+        }finally {
+            close(ps, rs);
+        }
+
+
+        return workersList;
+    }
+
     private Statement createStatement() throws SQLException {
         return con.createStatement();
     }
@@ -154,6 +201,25 @@ public class WorkerDatabaseManager {
 
     private void close(Statement st){
         close(st, null);
+    }
+
+    private static String generateColumnNames(String[] columns)
+    {
+        StringBuilder columnString = new StringBuilder();
+        boolean firstRecord = true;
+
+        for (String name : columns)
+        {
+            if (!firstRecord)
+            {
+                columnString.append(", ");
+            }
+            columnString.append(name);
+
+            firstRecord = false;
+        }
+
+        return columnString.toString();
     }
 
 }
