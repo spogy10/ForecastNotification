@@ -20,7 +20,7 @@ public class Main extends Application { //todo: delete json.txt
 
     public static Map<Day, LinkedList<WeatherForecast>> KINGSTON;
     public static Map<Day, LinkedList<WeatherForecast>> MOBAY;
-    public static boolean dataReceived = false;
+    private static boolean dataReceived = false;
 
     public static void main(String[] args) {
         Weather w = new Weather("Kingston", "jm");
@@ -64,6 +64,9 @@ public class Main extends Application { //todo: delete json.txt
                     }
                 }
             });
+
+            SendEmail sendEmail = new SendEmail();
+            sendEmail.sendMessages();
         }else{
             FXHelper.alertPopup(this, "Error", "Error receiving weather update");
         }
