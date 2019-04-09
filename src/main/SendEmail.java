@@ -1,16 +1,18 @@
 package main;
 
-import JavaFXHelper.FXHelper;
 import com.sendgrid.*;
 import database.WorkerDatabaseManager;
 import model.Day;
 import model.WeatherForecast;
 import model.Worker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SendEmail {
     private List<Worker> workersList;
@@ -150,7 +152,7 @@ public class SendEmail {
         Content content = new Content("text/plain", message);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid(getAPIKey());
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
@@ -164,5 +166,20 @@ public class SendEmail {
         }
 
         return response;
+    }
+
+    private static String getAPIKey() {
+        String s  = "";
+        try {
+            File file = new File("email.key");
+            Scanner in = new Scanner(file);
+
+            if(in.hasNext())
+                s = in.nextLine();
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 }

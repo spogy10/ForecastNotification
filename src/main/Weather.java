@@ -7,23 +7,17 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class Weather {
     private String city;
     private String countryCode;
-    private final String baseUrl = "http://api.openweathermap.org/data/2.5/forecast?APPID=e3a4361d5129cb5aab34242bb4617c53&units=metric";
+    private final String baseUrl = "http://api.openweathermap.org/data/2.5/forecast?units=metric&APPID=";
 
     public Weather(String city, String countryCode){
         this.city = city;
@@ -33,6 +27,7 @@ public class Weather {
     private String getJSON(){
         String json = "";
         StringBuilder buildUrl = new StringBuilder(baseUrl);
+        buildUrl.append(getAPIKey());
         buildUrl.append("&q=");
         buildUrl.append(city);
         buildUrl.append(",");
@@ -61,6 +56,21 @@ public class Weather {
         }
 
         return json;
+    }
+
+    private String getAPIKey() {
+        String s  = "";
+        try {
+            File file = new File("weather.key");
+            Scanner in = new Scanner(file);
+
+            if(in.hasNext())
+                s = in.nextLine();
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 
     public static Image getImage(String fileName){
