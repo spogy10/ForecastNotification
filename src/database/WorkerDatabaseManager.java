@@ -139,8 +139,6 @@ public class WorkerDatabaseManager {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
-            Statement s = createStatement();
-
             ps = prepareStatement(query);
             rs = ps.executeQuery();
             Worker w;

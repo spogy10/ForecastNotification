@@ -1,6 +1,7 @@
 package main;
 
 import JavaFXHelper.FXHelper;
+import com.sendgrid.*;
 import database.WorkerDatabaseManager;
 import model.Day;
 import model.WeatherForecast;
@@ -40,32 +41,50 @@ public class SendEmail {
         }
     }
 
-    private void sendToKingstonWorkers(String message){ //TODO: add code to send emails
-        System.out.println(message);
+    private void sendToKingstonWorkers(String message){
+        System.out.println("Email to Kingston Workers: "+message);
+
+        String sender = "boss@boss.com";
+        String subject = "Attention Kingston Workers";
+        for(String email : kingstonWorkersEmail){
+            sendEmail(sender, subject, email, message);
+        }
     }
 
     private void sendToKingstonITWorkers(String message){
-        System.out.println(message);
+        System.out.println("Email to Kingston IT Workers: "+message);
+
+        String sender = "boss@boss.com";
+        String subject = "Attention Kingston IT Workers";
+        for(String email : kingstonITEmail){
+            sendEmail(sender, subject, email, message);
+        }
     }
 
     private void sendToMontegoBayWorkers(String message){
-        System.out.println(message);
+        System.out.println("Email to Montego Bay Workers: "+message);
+
+        String sender = "boss@boss.com";
+        String subject = "Attention Montego Bay Workers";
+        for(String email : montegoBayWorkersEmail){
+            sendEmail(sender, subject, email, message);
+        }
     }
 
     private void sendToMontegoBayITWorkers(String message){
-        System.out.println(message);
+        System.out.println("Email to Montego Bay IT Workers: "+message);
+
+        String sender = "boss@boss.com";
+        String subject = "Attention Montego Bay IT Workers";
+        for(String email : montegoBayITEmail){
+            sendEmail(sender, subject, email, message);
+        }
     }
 
-    public void sendMessages(){
+    void sendMessages(){
 
         sendMessages(Main.KINGSTON, true);
         sendMessages(Main.MOBAY, false);
-
-        try {
-            FXHelper.alertPopup(this, "Notifications", "Emails Sent.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -124,19 +143,26 @@ public class SendEmail {
         }
     }
 
-    public List<String> getKingstonWorkersEmail() {
-        return kingstonWorkersEmail;
-    }
+    private static Response sendEmail(String sender, String subject, String recipient, String message){
+        Response response = new Response();
+        Email from = new Email(sender);
+        Email to = new Email(recipient);
+        Content content = new Content("text/plain", message);
+        Mail mail = new Mail(from, subject, to, content);
 
-    public List<String> getMontegoBayWorkersEmail() {
-        return montegoBayWorkersEmail;
-    }
+        SendGrid sg = new SendGrid("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");
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            response = sg.api(request);
+            System.out.println("Email to "+recipient+" has status code: "+response.getStatusCode());
+            System.out.println(response.getBody());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
-    public List<String> getKingstonITEmail() {
-        return kingstonITEmail;
-    }
-
-    public List<String> getMontegoBayITEmail() {
-        return montegoBayITEmail;
+        return response;
     }
 }

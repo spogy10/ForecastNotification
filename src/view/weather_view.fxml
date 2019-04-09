@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WeatherViewController">
+   <content>
+      <GridPane fx:id="gridPane" alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="250.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="1 AM" textAlignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="40.0" />
+               </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="4 AM" textAlignment="CENTER" GridPane.rowIndex="2">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="7 AM" textAlignment="CENTER" GridPane.rowIndex="3">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="10 AM" textAlignment="CENTER" GridPane.rowIndex="4">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="1 PM" textAlignment="CENTER" GridPane.rowIndex="5">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="4 PM" textAlignment="CENTER" GridPane.rowIndex="6">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="7 PM" textAlignment="CENTER" GridPane.rowIndex="7">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="110.0" prefWidth="161.0" text="10 PM" textAlignment="CENTER" GridPane.rowIndex="8">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+
+
+             <Label fx:id="lDay1" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="1">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label fx:id="lDay2" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="2">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label fx:id="lDay3" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="3">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label fx:id="lDay4" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="4">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label fx:id="lDay5" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="5">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+             <Label fx:id="lDay6" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="240.0" textAlignment="CENTER" GridPane.columnIndex="6">
+                 <font>
+                     <Font size="40.0" />
+                 </font></Label>
+            <ComboBox fx:id="cbCity" onAction="#cityChange" prefWidth="150.0" />
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>

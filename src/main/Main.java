@@ -3,6 +3,7 @@ package main;
 import JavaFXHelper.FXHelper;
 import controller.WeatherViewController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class Main extends Application { //todo: delete json.txt
+public class Main extends Application {
 
     public static Map<Day, LinkedList<WeatherForecast>> KINGSTON;
     public static Map<Day, LinkedList<WeatherForecast>> MOBAY;
@@ -66,7 +67,31 @@ public class Main extends Application { //todo: delete json.txt
             });
 
             SendEmail sendEmail = new SendEmail();
-            sendEmail.sendMessages();
+            try {
+                FXHelper.alertPopup(this, "Notifications", "Emails are being sent.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sendEmail.sendMessages();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                FXHelper.alertPopup(this, "Notifications", "Emails Sent.");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+            thread.start();
+
+
         }else{
             FXHelper.alertPopup(this, "Error", "Error receiving weather update");
         }
