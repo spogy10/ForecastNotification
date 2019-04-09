@@ -16,48 +16,56 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class Main extends Application {
+public class Main extends Application { //todo: delete json.txt
 
     public static Map<Day, LinkedList<WeatherForecast>> KINGSTON;
     public static Map<Day, LinkedList<WeatherForecast>> MOBAY;
+    public static boolean dataReceived = false;
 
     public static void main(String[] args) {
         Weather w = new Weather("Kingston", "jm");
         KINGSTON = w.parseJSON();
         w = new Weather("Montego Bay", "jm");
         MOBAY = w.parseJSON();
-        if(KINGSTON.size() > 0 && MOBAY.size() > 0){
-            launch(args);
+
+        dataReceived = (KINGSTON.size() > 0 && MOBAY.size() > 0);
+        if(dataReceived){
+            System.out.println("Received weather");
         }else{
             System.out.println("Error receiving weather");
         }
+        launch(args);
 
     }
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(WeatherViewController.FXML));
 
-        Scene scene = new Scene(root);
+        if(dataReceived) {
+            Parent root = FXMLLoader.load(getClass().getResource(WeatherViewController.FXML));
 
-        primaryStage.setScene(scene);
+            Scene scene = new Scene(root);
 
-        primaryStage.setTitle(WeatherViewController.TITLE);
+            primaryStage.setScene(scene);
 
-        primaryStage.show();
+            primaryStage.setTitle(WeatherViewController.TITLE);
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                event.consume();
-                try {
-                    FXHelper.closeProgram(this, primaryStage);
-                    System.exit(0);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            primaryStage.show();
+
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();
+                    try {
+                        FXHelper.closeProgram(this, primaryStage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            FXHelper.alertPopup(this, "Error", "Error receiving weather update");
+        }
     }
 }
