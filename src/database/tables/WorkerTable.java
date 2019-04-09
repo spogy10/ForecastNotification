@@ -8,5 +8,4 @@ public interface WorkerTable {
     String TELEPHONE_NUM = "telephoneNo";
     String ROLE_ID = "role_id";
     String EMAIL = "email";
-    String ADDRESS_LOCATION = "address_location";
 }

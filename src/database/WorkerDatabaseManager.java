@@ -68,7 +68,6 @@ public class WorkerDatabaseManager {
                     "\t\""+WorkerTable.TELEPHONE_NUM+"\"\tTEXT,\n" +
                     "\t\""+WorkerTable.ROLE_ID+"\"\tINTEGER NOT NULL,\n" +
                     "\t\""+WorkerTable.EMAIL+"\"\tTEXT NOT NULL,\n" +
-                    "\t\""+WorkerTable.ADDRESS_LOCATION+"\"\tTEXT,\n" +
                     "\tFOREIGN KEY(\"city_id\") REFERENCES \""+CITY_TABLE_NAME+"\"(\""+ CityTable.ID +"\"),\n" +
                     "\tFOREIGN KEY(\"role_id\") REFERENCES \""+ROLE_TABLE_NAME+"\"(\""+ RoleTable.ID +"\")\n" +
                     ");";
@@ -154,10 +153,9 @@ public class WorkerDatabaseManager {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getString(7),
-                        rs.getString(8));
-                c = new City(rs.getInt(4), rs.getString(9), rs.getString(10));
-                r = new Role(rs.getInt(6), rs.getString(11));
+                        rs.getString(7));
+                c = new City(rs.getInt(4), rs.getString(8), rs.getString(9));
+                r = new Role(rs.getInt(6), rs.getString(10));
                 w.setCity(c);
                 w.setRole(r);
                 workersList.add(w);

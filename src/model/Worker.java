@@ -10,14 +10,13 @@ public class Worker {
     private int roleID;
     private Role role;
     private String email;
-    private String addressLocation;
 
 
     public Worker(int id, String name, int cityID, int roleID, String email) {
-        this(id, name, "", cityID, "", roleID, email, "");
+        this(id, name, "", cityID, "", roleID, email);
     }
 
-    public Worker(int id, String name, String address1, int cityID, String telephoneNum, int roleID, String email, String addressLocation) {
+    public Worker(int id, String name, String address1, int cityID, String telephoneNum, int roleID, String email) {
         this.id = id;
         this.name = name;
         this.address1 = address1;
@@ -25,7 +24,6 @@ public class Worker {
         this.telephoneNum = telephoneNum;
         this.roleID = roleID;
         this.email = email;
-        this.addressLocation = addressLocation;
     }
 
     public int getId() {
@@ -84,14 +82,6 @@ public class Worker {
         this.email = email;
     }
 
-    public String getAddressLocation() {
-        return addressLocation;
-    }
-
-    public void setAddressLocation(String addressLocation) {
-        this.addressLocation = addressLocation;
-    }
-
     public City getCity() {
         return city;
     }
@@ -120,7 +110,6 @@ public class Worker {
                 ", roleID=" + roleID +
                 ", role=" + role +
                 ", email='" + email + '\'' +
-                ", addressLocation='" + addressLocation + '\'' +
                 '}';
     }
 }
